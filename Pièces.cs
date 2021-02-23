@@ -10,7 +10,7 @@ namespace S2
         protected int X;
         protected int Y;
         protected int Z;
-        protected (int x ,int y) Position;
+        public (int x ,int y) Position;
         protected (int x, int y) départ;
         public Teams Team;
         protected abstract List<(int, int)> Possible_moves(Echiquier e);
@@ -28,8 +28,8 @@ namespace S2
        
         protected static int ennemi_present( int posx,int posy,Teams allié,Echiquier e)
         {
-            int pos = e.Getposition(posx,posy);
-            Case c=e.cases[pos];
+            int pos = Echiquier.Getposition(posx,posy);
+            Case c=Echiquier.cases[pos];
             if (c.occupé)
                 if (c.team !=allié.id)
                     return 2;//ennemi en place
@@ -63,4 +63,5 @@ namespace S2
         }
         
     }
+    
 }
