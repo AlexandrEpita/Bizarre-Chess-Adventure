@@ -8,6 +8,7 @@ namespace S2
     {
         public Echiquier echiquier;
         public List<Teams> equipe;
+        public List<Pieces> compo;
         public int fini()
         {
             int id=0;
@@ -23,7 +24,7 @@ namespace S2
     }
     public class Teams
     {
-        public List<Pièces> Pieces;
+        public List<Pieces> Piecesliste;
         public string Name;
         public int id;
         public bool echecetmat;
@@ -33,6 +34,28 @@ namespace S2
             this.id = id;
             Name = name;
         }
-        
+
+        public bool est_echec(Teams ennemies)
+        {
+            Pieces p = Piecesliste[0];//c le roi
+            foreach (Pieces ennemi in ennemies.Piecesliste)
+            {
+                foreach (var pos in ennemi.deplacement)
+                {
+                    if (pos == p.Position)
+                        return true;
+                }
+            }
+            return false;
+        }
+
+        public bool et_mat()
+        {
+            if (echec)
+            {
+                return Piecesliste[0].deplacement.Count == 0;
+            }
+            return false;
+        }
     }
 }

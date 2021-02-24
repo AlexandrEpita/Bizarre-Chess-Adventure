@@ -29,7 +29,7 @@ namespace S2
             return (pos%8,pos/8);      //1   10
         }                              //0   9
 
-         public static void Move(Pièces p,int x,int y)
+         public static void Move(Pieces p,int x,int y)
          {
              int pos = Getposition(x, y);
              int xini = p.Position.x;
@@ -43,7 +43,7 @@ namespace S2
              cases[pos].occupant = p;
          }
 
-         public static void Destroy(Pièces p, int x, int y)
+         public static void Destroy(Pieces p, int x, int y)
          {
              p=null;
          }
@@ -52,10 +52,10 @@ namespace S2
     public class Case
     {
         //public Gameobject carré;
-        public Pièces occupant;
+        public Pieces occupant;
         public bool occupé;
         public int team;
-        public Case(bool occ,Pièces p,int t)
+        public Case(bool occ,Pieces p,int t)
         {
             occupé = occ;
             occupant = p;
