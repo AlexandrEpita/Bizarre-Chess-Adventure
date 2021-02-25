@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Data;
 using System.Runtime.CompilerServices;
 using System.Runtime.Versioning;
 
@@ -26,7 +27,6 @@ namespace S2
             return false;
         }
 
-       
         protected static int ennemi_present( int posx,int posy,Teams allié)
         {
             int pos = Echiquier.Getposition(posx,posy);
@@ -41,6 +41,11 @@ namespace S2
             
             return 0;
         }
+
+        public void Update(Game g)
+        {
+            deplacement = Possible_moves( g.equipes[1-team.id]);
+        }
     }
     public abstract class Pawn:Pieces
     {
@@ -50,7 +55,7 @@ namespace S2
             if (ennemi_present(Position.x, Position.y+1, team)==0)
             {
                 liste.Add((Position.x,Position.y+1) ) ;
-                if (Position == départ)
+                if (Position == this.départ)
                     if (ennemi_present(Position.x,Position.y+2,team)==0)
                     {
                         liste.Add((Position.x,Position.y+2) ) ;

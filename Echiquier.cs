@@ -8,7 +8,7 @@ namespace S2
 {
     public class Echiquier
     {
-        int x, y;
+        int x, y,z;
         public static List<Case> cases;
 
         public Echiquier(Game g,int x,int y)
@@ -55,7 +55,7 @@ namespace S2
         public Pieces occupant;
         public bool occupé;
         public int team;
-        public Case(bool occ,Pieces p,int t)
+        public Case(bool occ,Pieces p,int t)//a completer avec les game object
         {
             occupé = occ;
             occupant = p;
