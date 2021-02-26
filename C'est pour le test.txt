@@ -1,2 +1,0 @@
-Normalement tout marche voila 
-Effectivement tout marche essayez de pull et de push pour voir

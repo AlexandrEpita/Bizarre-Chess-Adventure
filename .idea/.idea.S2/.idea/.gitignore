@@ -1,0 +1,13 @@
+﻿# Default ignored files
+/shelf/
+/workspace.xml
+# Rider ignored files
+/projectSettingsUpdater.xml
+/contentModel.xml
+/modules.xml
+/.idea.S2.iml
+# Datasource local storage ignored files
+/../../../../../../../../../../:\Users\lalex\OneDrive\Bureau\tP\Bizarre-Chess-Adventure\.idea\.idea.S2\.idea/dataSources/
+/dataSources.local.xml
+# Editor-based HTTP Client requests
+/httpRequests/
