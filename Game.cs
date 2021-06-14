@@ -13,12 +13,30 @@ namespace S2
         {
             this.equipes = equipe;
         }
-        public void Init_Partie(){}
+
+        public void Tranmission(List<Pieces> pliste)
+        {
+            Teams ia = new Teams(0,"ordi");
+            Teams j =new Teams(1,"humain");
+            foreach (var p in pliste)
+            {
+                switch (p.assignement)
+                {
+                    case 0:
+                        p.team = ia;
+                        ia.Piecesliste.Add(p);
+                        break;
+                    case 1:
+                        p.team = j;
+                        j.Piecesliste.Add(p);
+                        break;
+                }
+            }
+        }
         public void Partie_lance()
         {
             bool findugame = true;
             int fin;
-            Init_Partie();
             Teams winner = null;
             int j = 0;
             while (findugame)
@@ -67,11 +85,11 @@ namespace S2
         //ainsi 1-id represente l'équipe ennemi
         public bool echecetmat;
         public bool echec;
-        public Teams(int id,string name,Game g)
+        public Teams(int id,string name)
         {
             this.id = id;
             Name = name;
-            Piecesliste = g.compo;
+            Piecesliste=new List<Pieces>();
         }
 
         public void Update( Game g)

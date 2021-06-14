@@ -15,6 +15,7 @@ namespace S2
         protected (int x, int y) départ;
         public Teams team;
         public List<(int, int)> deplacement;
+        public int assignement;
         protected abstract List<(int, int)> Possible_moves(Teams ennemi);
 
         public static bool Canmove((int, int) position, List<(int, int)> liste)

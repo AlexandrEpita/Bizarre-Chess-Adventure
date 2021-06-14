@@ -55,11 +55,15 @@ namespace S2
         public Pieces occupant;
         public bool occupé;
         public int team;
+        public int modif;
         public Case(bool occ,Pieces p,int t)//a completer avec les game object
         {
             occupé = occ;
             occupant = p;
             team = t;
+            modif = 0;
         }
     }
+
+   
 }
