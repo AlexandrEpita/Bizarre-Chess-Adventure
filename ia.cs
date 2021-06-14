@@ -22,7 +22,27 @@ namespace S2
         public List<mvt> liste_ia;
         public List<mvt> liste_j;
         private int valeur_des_bests = 50;//
-        
+
+        public ia(List<Pieces> allié, List<Pieces> ennemi)
+        {
+            foreach (var p in allié)
+            {
+                
+                foreach (var v in p.deplacement)
+                {
+                    liste_ia.Add(new mvt(p.Position, v) );
+                }
+            }
+            foreach (var p in ennemi)
+            {
+                
+                foreach (var v in p.deplacement)
+                {
+                    liste_j.Add(new mvt(p.Position, v) );
+                }
+            }
+            
+        }
         public mvt Get_maxmvt(int i)
         {
             mvt rep = null;
