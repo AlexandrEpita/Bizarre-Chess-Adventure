@@ -1,0 +1,13 @@
+fileFormatVersion: 2
+guid: 14f33a2907122544891000036cc70afd
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - Dame: {fileID: 5338565111228142792, guid: 4b50a1ab49e8cd147aad647ce19ebaaf, type: 3}
+  - m_game: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

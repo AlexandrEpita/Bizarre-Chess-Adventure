@@ -270,3 +270,7 @@ C:\Users\lalex\BCA\obj\Debug\Assembly-CSharp.csproj.CoreCompileInputs.cache
 C:\Users\lalex\BCA\obj\Debug\Assembly-CSharp.csproj.CopyComplete
 C:\Users\lalex\BCA\obj\Debug\Assembly-CSharp.dll
 C:\Users\lalex\BCA\obj\Debug\Assembly-CSharp.pdb
+C:\Users\lalex\OneDrive\Bureau\tP\Bizarre-Chess-Adventure\BCA\obj\Debug\Assembly-CSharp.csprojAssemblyReference.cache
+C:\Users\lalex\OneDrive\Bureau\tP\Bizarre-Chess-Adventure\BCA\obj\Debug\Assembly-CSharp.csproj.CoreCompileInputs.cache
+C:\Users\lalex\OneDrive\Bureau\tP\Bizarre-Chess-Adventure\BCA\obj\Debug\Assembly-CSharp.dll
+C:\Users\lalex\OneDrive\Bureau\tP\Bizarre-Chess-Adventure\BCA\obj\Debug\Assembly-CSharp.pdb
