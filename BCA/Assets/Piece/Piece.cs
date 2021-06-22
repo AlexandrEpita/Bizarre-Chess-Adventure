@@ -112,22 +112,23 @@ public class Piece : MonoBehaviour
         }
         return null;
     }
-    void isechec()
+    bool isechec()
     {
         foreach(Piece p in Game.pieces)
         {
             if (this.gameObject.name=="Roi(Clone)" && Case.find((this.transform.parent.position.z - 0.5f, this.transform.parent.position.x - 0.5f), p.Possible_moves(p.gameObject)))
             {
-                echec = true;
+                return true;
             }
         }
+        return false;
         
     }
     public Piece Getroi(ChessColor c)
     {
         foreach(Piece p in Game.pieces)
         {
-            if(getname(p)=="Roi(Clone)" && p.m_color == c)
+            if(p.m_color== c && p.gameObject.name=="Roi(Clone)" && p.m_color == c)
             {
                 return p;
             }
@@ -873,69 +874,444 @@ public class Piece : MonoBehaviour
 
             }
         }
+        List<(float, float)> f1 = new List<(float, float)>();
+        List<(float, float)> f2 = new List<(float, float)>();
 
 
-        List<(float,float)> f1=new List<(float, float)>();
-        List<(float,float)> f2 = new List<(float, float)>();
-        if (m_game.m_turn == ChessColor.Blanc)
+        if (wechequeur.Count == 1)
         {
-            foreach(Piece p in wechequeur)
+            if (m_game.m_turn == ChessColor.Blanc)
             {
-                if (getname(p) == "Pion(Clone)" || getname(p)=="Cavalier(Clone)")
+                foreach (Piece p in wechequeur)
                 {
-                    f1.Add((p.transform.parent.position.z - 0.5f, p.transform.parent.position.x - 0.5f));
+                    if (p != null)
+                    {
+                        if (getname(p) == "Pion(Clone)" || getname(p) == "Cavalier(Clone)")
+                        {
+                            f1.Add((p.transform.parent.position.z - 0.5f, p.transform.parent.position.x - 0.5f));
+                        }
+                        if (getname(p) == "Tour(Clone)")
+                        {
+                            if (p.transform.parent.position.z - 0.5f > m_game.roiblanc.transform.parent.position.z - 0.5f)
+                            {
+
+                                float i = p.transform.parent.position.z - 0.5f;
+                                while (i > m_game.roiblanc.transform.parent.position.z - 0.5f)
+                                {
+                                    f1.Add((i, p.transform.parent.position.x - 0.5f));
+                                    i--;
+                                }
+                            }
+                            else if (p.transform.parent.position.z - 0.5f < m_game.roiblanc.transform.parent.position.z - 0.5f)
+                            {
+
+                                float i = p.transform.parent.position.z - 0.5f;
+                                while (i < m_game.roiblanc.transform.parent.position.z - 0.5f)
+                                {
+                                    f1.Add((i, p.transform.parent.position.x - 0.5f));
+                                    i++;
+                                }
+                            }
+                            else if (p.transform.parent.position.x - 0.5f > m_game.roiblanc.transform.parent.position.x - 0.5f)
+                            {
+
+                                float i = p.transform.parent.position.x - 0.5f;
+                                while (i > m_game.roiblanc.transform.parent.position.x - 0.5f)
+                                {
+                                    f1.Add((p.transform.parent.position.z - 0.5f, i));
+                                    i--;
+                                }
+                            }
+                            else if (p.transform.parent.position.x - 0.5f < m_game.roiblanc.transform.parent.position.x - 0.5f)
+                            {
+
+                                float i = p.transform.parent.position.x - 0.5f;
+                                while (i < m_game.roiblanc.transform.parent.position.x - 0.5f)
+                                {
+                                    f1.Add((p.transform.parent.position.z - 0.5f, i));
+                                    i++;
+                                }
+                            }
+                        }
+                        if (getname(p) == "Fou(Clone)")
+                        {
+                            if (p.transform.parent.position.z - 0.5f > m_game.roiblanc.transform.parent.position.z - 0.5f && p.transform.parent.position.x - 0.5f > m_game.roiblanc.transform.parent.position.x - 0.5f)
+                            {
+                                float i = p.transform.parent.position.z - 0.5f;
+                                float j = p.transform.parent.position.x - 0.5f;
+                                while (i > m_game.roiblanc.transform.parent.position.z - 0.5f)
+                                {
+
+                                    f1.Add((i, j));
+                                    i--;
+                                    j--;
+                                }
+                            }
+
+                            if (p.transform.parent.position.z - 0.5f < m_game.roiblanc.transform.parent.position.z - 0.5f && p.transform.parent.position.x - 0.5f < m_game.roiblanc.transform.parent.position.x - 0.5f)
+                            {
+                                float i = p.transform.parent.position.z - 0.5f;
+                                float j = p.transform.parent.position.x - 0.5f;
+                                while (i < m_game.roiblanc.transform.parent.position.z - 0.5f)
+                                {
+                                    f1.Add((i, j));
+                                    i++;
+                                    j++;
+                                }
+                            }
+
+                            if (p.transform.parent.position.z - 0.5f < m_game.roiblanc.transform.parent.position.z - 0.5f && p.transform.parent.position.x - 0.5f > m_game.roiblanc.transform.parent.position.x - 0.5f)
+                            {
+
+                                float i = p.transform.parent.position.z - 0.5f;
+                                float j = p.transform.parent.position.x - 0.5f;
+                                while (i < m_game.roiblanc.transform.parent.position.z - 0.5f)
+                                {
+                                    f1.Add((i, j));
+                                    i++;
+                                    j--;
+                                }
+                            }
+
+                            if (p.transform.parent.position.z - 0.5f > m_game.roiblanc.transform.parent.position.z - 0.5f && p.transform.parent.position.x - 0.5f < m_game.roiblanc.transform.parent.position.x - 0.5f)
+                            {
+                                float i = p.transform.parent.position.z - 0.5f;
+                                float j = p.transform.parent.position.x - 0.5f;
+                                while (i > m_game.roiblanc.transform.parent.position.z - 0.5f)
+                                {
+                                    f1.Add((i, j));
+                                    i--;
+                                    j++;
+                                }
+                            }
+                        }
+                        if (getname(p) == "Dame(Clone)")
+                        {
+                            if (p.transform.parent.position.z - 0.5f > m_game.roiblanc.transform.parent.position.z - 0.5f)
+                            {
+
+                                float i = p.transform.parent.position.z - 0.5f;
+                                while (i > m_game.roiblanc.transform.parent.position.z - 0.5f)
+                                {
+                                    f1.Add((i, p.transform.parent.position.x - 0.5f));
+                                    i--;
+                                }
+                            }
+                            else if (p.transform.parent.position.z - 0.5f < m_game.roiblanc.transform.parent.position.z - 0.5f)
+                            {
+
+                                float i = p.transform.parent.position.z - 0.5f;
+                                while (i < m_game.roiblanc.transform.parent.position.z - 0.5f)
+                                {
+                                    f1.Add((i, p.transform.parent.position.x - 0.5f));
+                                    i++;
+                                }
+                            }
+                            else if (p.transform.parent.position.x - 0.5f > m_game.roiblanc.transform.parent.position.x - 0.5f)
+                            {
+
+                                float i = p.transform.parent.position.x - 0.5f;
+                                while (i > m_game.roiblanc.transform.parent.position.x - 0.5f)
+                                {
+                                    f1.Add((p.transform.parent.position.z - 0.5f, i));
+                                    i--;
+                                }
+                            }
+                            else if (p.transform.parent.position.x - 0.5f < m_game.roiblanc.transform.parent.position.x - 0.5f)
+                            {
+
+                                float i = p.transform.parent.position.x - 0.5f;
+                                while (i < m_game.roiblanc.transform.parent.position.x - 0.5f)
+                                {
+                                    f1.Add((p.transform.parent.position.z - 0.5f, i));
+                                    i++;
+                                }
+                            }
+                            if (p.transform.parent.position.z - 0.5f > m_game.roiblanc.transform.parent.position.z - 0.5f && p.transform.parent.position.x - 0.5f > m_game.roiblanc.transform.parent.position.x - 0.5f)
+                            {
+                                float i = p.transform.parent.position.z - 0.5f;
+                                float j = p.transform.parent.position.x - 0.5f;
+                                while (i > m_game.roiblanc.transform.parent.position.z - 0.5f)
+                                {
+
+                                    f1.Add((i, j));
+                                    i--;
+                                    j--;
+                                }
+                            }
+
+                            if (p.transform.parent.position.z - 0.5f < m_game.roiblanc.transform.parent.position.z - 0.5f && p.transform.parent.position.x - 0.5f < m_game.roiblanc.transform.parent.position.x - 0.5f)
+                            {
+                                float i = p.transform.parent.position.z - 0.5f;
+                                float j = p.transform.parent.position.x - 0.5f;
+                                while (i < m_game.roiblanc.transform.parent.position.z - 0.5f)
+                                {
+                                    f1.Add((i, j));
+                                    i++;
+                                    j++;
+                                }
+                            }
+
+                            if (p.transform.parent.position.z - 0.5f < m_game.roiblanc.transform.parent.position.z - 0.5f && p.transform.parent.position.x - 0.5f > m_game.roiblanc.transform.parent.position.x - 0.5f)
+                            {
+
+                                float i = p.transform.parent.position.z - 0.5f;
+                                float j = p.transform.parent.position.x - 0.5f;
+                                while (i < m_game.roiblanc.transform.parent.position.z - 0.5f)
+                                {
+                                    f1.Add((i, j));
+                                    i++;
+                                    j--;
+                                }
+                            }
+
+                            if (p.transform.parent.position.z - 0.5f > m_game.roiblanc.transform.parent.position.z - 0.5f && p.transform.parent.position.x - 0.5f < m_game.roiblanc.transform.parent.position.x - 0.5f)
+                            {
+                                float i = p.transform.parent.position.z - 0.5f;
+                                float j = p.transform.parent.position.x - 0.5f;
+                                while (i > m_game.roiblanc.transform.parent.position.z - 0.5f)
+                                {
+                                    f1.Add((i, j));
+                                    i--;
+                                    j++;
+                                }
+                            }
+                        }
+                    }
+
                 }
-                if (getname(p) == "Tour(Clone)")
+                f2 = Getsim(f1, liste);
+                liste.Clear();
+                liste = f2;
+                /*wechequeur.Clear();*/
+            }
+            if (bechequeur.Count == 1)
+            {
+                if (m_game.m_turn == ChessColor.Noir)
                 {
-                    if(p.transform.parent.position.z - 0.5f>Getroi(ChessColor.Noir).transform.parent.position.z-0.5f)
+                    foreach (Piece p in bechequeur)
                     {
-                        float i = p.transform.parent.position.z - 0.5f;
-                        while (i> Getroi(ChessColor.Noir).transform.parent.position.z - 0.5f)
+                        if (p != null)
                         {
-                            f1.Add((i, p.transform.parent.position.x - 0.5f));
-                            i--;
+                            if (getname(p) == "Pion(Clone)" || getname(p) == "Cavalier(Clone)")
+                            {
+                                f1.Add((p.transform.parent.position.z - 0.5f, p.transform.parent.position.x - 0.5f));
+                            }
+                            if (getname(p) == "Tour(Clone)")
+                            {
+                                if (p.transform.parent.position.z - 0.5f > m_game.roinoir.transform.parent.position.z - 0.5f)
+                                {
+
+                                    float i = p.transform.parent.position.z - 0.5f;
+                                    while (i > m_game.roinoir.transform.parent.position.z - 0.5f)
+                                    {
+                                        f1.Add((i, p.transform.parent.position.x - 0.5f));
+                                        i--;
+                                    }
+                                }
+                                else if (p.transform.parent.position.z - 0.5f < m_game.roinoir.transform.parent.position.z - 0.5f)
+                                {
+
+                                    float i = p.transform.parent.position.z - 0.5f;
+                                    while (i < m_game.roinoir.transform.parent.position.z - 0.5f)
+                                    {
+                                        f1.Add((i, p.transform.parent.position.x - 0.5f));
+                                        i++;
+                                    }
+                                }
+                                else if (p.transform.parent.position.x - 0.5f > m_game.roinoir.transform.parent.position.x - 0.5f)
+                                {
+
+                                    float i = p.transform.parent.position.x - 0.5f;
+                                    while (i > m_game.roinoir.transform.parent.position.x - 0.5f)
+                                    {
+                                        f1.Add((p.transform.parent.position.z - 0.5f, i));
+                                        i--;
+                                    }
+                                }
+                                else if (p.transform.parent.position.x - 0.5f < m_game.roinoir.transform.parent.position.x - 0.5f)
+                                {
+
+                                    float i = p.transform.parent.position.x - 0.5f;
+                                    while (i < m_game.roinoir.transform.parent.position.x - 0.5f)
+                                    {
+                                        f1.Add((p.transform.parent.position.z - 0.5f, i));
+                                        i++;
+                                    }
+                                }
+                            }
+                            if (getname(p) == "Fou(Clone)")
+                            {
+                                if (p.transform.parent.position.z - 0.5f > m_game.roinoir.transform.parent.position.z - 0.5f && p.transform.parent.position.x - 0.5f > m_game.roinoir.transform.parent.position.x - 0.5f)
+                                {
+                                    float i = p.transform.parent.position.z - 0.5f;
+                                    float j = p.transform.parent.position.x - 0.5f;
+                                    while (i > m_game.roinoir.transform.parent.position.z - 0.5f)
+                                    {
+
+                                        f1.Add((i, j));
+                                        i--;
+                                        j--;
+                                    }
+                                }
+
+                                if (p.transform.parent.position.z - 0.5f < m_game.roinoir.transform.parent.position.z - 0.5f && p.transform.parent.position.x - 0.5f < m_game.roinoir.transform.parent.position.x - 0.5f)
+                                {
+                                    float i = p.transform.parent.position.z - 0.5f;
+                                    float j = p.transform.parent.position.x - 0.5f;
+                                    while (i < m_game.roinoir.transform.parent.position.z - 0.5f)
+                                    {
+                                        f1.Add((i, j));
+                                        i++;
+                                        j++;
+                                    }
+                                }
+
+                                if (p.transform.parent.position.z - 0.5f < m_game.roinoir.transform.parent.position.z - 0.5f && p.transform.parent.position.x - 0.5f > m_game.roinoir.transform.parent.position.x - 0.5f)
+                                {
+
+                                    float i = p.transform.parent.position.z - 0.5f;
+                                    float j = p.transform.parent.position.x - 0.5f;
+                                    while (i < m_game.roinoir.transform.parent.position.z - 0.5f)
+                                    {
+                                        f1.Add((i, j));
+                                        i++;
+                                        j--;
+                                    }
+                                }
+
+                                if (p.transform.parent.position.z - 0.5f > m_game.roinoir.transform.parent.position.z - 0.5f && p.transform.parent.position.x - 0.5f < m_game.roinoir.transform.parent.position.x - 0.5f)
+                                {
+                                    float i = p.transform.parent.position.z - 0.5f;
+                                    float j = p.transform.parent.position.x - 0.5f;
+                                    while (i > m_game.roinoir.transform.parent.position.z - 0.5f)
+                                    {
+                                        f1.Add((i, j));
+                                        i--;
+                                        j++;
+                                    }
+                                }
+                            }
+                            if (getname(p) == "Dame(Clone)")
+                            {
+                                if (p.transform.parent.position.z - 0.5f > m_game.roinoir.transform.parent.position.z - 0.5f)
+                                {
+
+                                    float i = p.transform.parent.position.z - 0.5f;
+                                    while (i > m_game.roinoir.transform.parent.position.z - 0.5f)
+                                    {
+                                        f1.Add((i, p.transform.parent.position.x - 0.5f));
+                                        i--;
+                                    }
+                                }
+                                else if (p.transform.parent.position.z - 0.5f < m_game.roinoir.transform.parent.position.z - 0.5f)
+                                {
+
+                                    float i = p.transform.parent.position.z - 0.5f;
+                                    while (i < m_game.roinoir.transform.parent.position.z - 0.5f)
+                                    {
+                                        f1.Add((i, p.transform.parent.position.x - 0.5f));
+                                        i++;
+                                    }
+                                }
+                                else if (p.transform.parent.position.x - 0.5f > m_game.roinoir.transform.parent.position.x - 0.5f)
+                                {
+
+                                    float i = p.transform.parent.position.x - 0.5f;
+                                    while (i > m_game.roinoir.transform.parent.position.x - 0.5f)
+                                    {
+                                        f1.Add((p.transform.parent.position.z - 0.5f, i));
+                                        i--;
+                                    }
+                                }
+                                else if (p.transform.parent.position.x - 0.5f < m_game.roinoir.transform.parent.position.x - 0.5f)
+                                {
+
+                                    float i = p.transform.parent.position.x - 0.5f;
+                                    while (i < m_game.roinoir.transform.parent.position.x - 0.5f)
+                                    {
+                                        f1.Add((p.transform.parent.position.z - 0.5f, i));
+                                        i++;
+                                    }
+                                }
+                                if (p.transform.parent.position.z - 0.5f > m_game.roinoir.transform.parent.position.z - 0.5f && p.transform.parent.position.x - 0.5f > m_game.roinoir.transform.parent.position.x - 0.5f)
+                                {
+                                    float i = p.transform.parent.position.z - 0.5f;
+                                    float j = p.transform.parent.position.x - 0.5f;
+                                    while (i > m_game.roinoir.transform.parent.position.z - 0.5f)
+                                    {
+
+                                        f1.Add((i, j));
+                                        i--;
+                                        j--;
+                                    }
+                                }
+
+                                if (p.transform.parent.position.z - 0.5f < m_game.roinoir.transform.parent.position.z - 0.5f && p.transform.parent.position.x - 0.5f < m_game.roinoir.transform.parent.position.x - 0.5f)
+                                {
+                                    float i = p.transform.parent.position.z - 0.5f;
+                                    float j = p.transform.parent.position.x - 0.5f;
+                                    while (i < m_game.roinoir.transform.parent.position.z - 0.5f)
+                                    {
+                                        f1.Add((i, j));
+                                        i++;
+                                        j++;
+                                    }
+                                }
+
+                                if (p.transform.parent.position.z - 0.5f < m_game.roinoir.transform.parent.position.z - 0.5f && p.transform.parent.position.x - 0.5f > m_game.roinoir.transform.parent.position.x - 0.5f)
+                                {
+
+                                    float i = p.transform.parent.position.z - 0.5f;
+                                    float j = p.transform.parent.position.x - 0.5f;
+                                    while (i < m_game.roinoir.transform.parent.position.z - 0.5f)
+                                    {
+                                        f1.Add((i, j));
+                                        i++;
+                                        j--;
+                                    }
+                                }
+
+                                if (p.transform.parent.position.z - 0.5f > m_game.roinoir.transform.parent.position.z - 0.5f && p.transform.parent.position.x - 0.5f < m_game.roinoir.transform.parent.position.x - 0.5f)
+                                {
+                                    float i = p.transform.parent.position.z - 0.5f;
+                                    float j = p.transform.parent.position.x - 0.5f;
+                                    while (i > m_game.roinoir.transform.parent.position.z - 0.5f)
+                                    {
+                                        f1.Add((i, j));
+                                        i--;
+                                        j++;
+                                    }
+                                }
+                            }
                         }
+
                     }
-                    if (p.transform.parent.position.z - 0.5f < Getroi(ChessColor.Noir).transform.parent.position.z - 0.5f)
-                    {
-                        float i = p.transform.parent.position.z - 0.5f;
-                        while (i < Getroi(ChessColor.Noir).transform.parent.position.z - 0.5f)
-                        {
-                            f1.Add((i, p.transform.parent.position.x - 0.5f));
-                            i++;
-                        }
-                    }
-                    if (p.transform.parent.position.x - 0.5f > Getroi(ChessColor.Noir).transform.parent.position.x - 0.5f)
-                    {
-                        float i = p.transform.parent.position.x - 0.5f;
-                        while (i > Getroi(ChessColor.Noir).transform.parent.position.x -0.5f)
-                        {
-                            f1.Add((p.transform.parent.position.z - 0.5f,i));
-                            i--;
-                        }
-                    }
-                    if (p.transform.parent.position.x - 0.5f < Getroi(ChessColor.Noir).transform.parent.position.x - 0.5f)
-                    {
-                        float i = p.transform.parent.position.x - 0.5f;
-                        while (i < Getroi(ChessColor.Noir).transform.parent.position.x - 0.5f)
-                        {
-                            f1.Add((p.transform.parent.position.z - 0.5f,i));
-                            i++;
-                        }
-                    }
+                    f2 = Getsim(f1, liste);
+                    liste.Clear();
+                    liste = f2;
+                    /*wechequeur.Clear();*/
                 }
             }
         }
-        if (Getroi(m_game.m_turn).echec)
+        if (wechequeur.Count == 2)
         {
-            f2 = Getsim(f1, liste);
             liste.Clear();
-            liste = f2;
         }
+        if (bechequeur.Count == 2)
+        {
+            liste.Clear();
+        }
+        /*
+        if (Getroi(m_game.m_turn).isechec())
+        {
+            
+        }*/
+       
         return liste; 
     }
 
-   
+    
     public void setPosition(Vector3 position)
     {
         m_position = ((float)position.x, (float)position.y);
@@ -948,9 +1324,9 @@ public class Piece : MonoBehaviour
     {
 
         yield return new WaitForSeconds(0.15f);
-        /*bechequeur.Clear();
-        wechequeur.Clear();*/
-        foreach (Piece p in Game.pieces)
+        bechequeur.Clear();
+        wechequeur.Clear();
+        /*foreach (Piece p in Game.pieces)
         {
             if (p != null)
             {
@@ -985,7 +1361,7 @@ public class Piece : MonoBehaviour
                     }
                 }
             }
-        }
+        }*/
 
         m_game.m_turn = (m_game.m_turn == ChessColor.Blanc) ? ChessColor.Noir : ChessColor.Blanc;
         if (m_game.m_turn == ChessColor.Noir)
@@ -994,7 +1370,7 @@ public class Piece : MonoBehaviour
             {
                 if (p.m_color == ChessColor.Noir && getname(p)=="Roi(Clone)")
                 {
-                    p.echec = false;
+                    /*p.echec = false;*/
                     p.done2 = false;
                 }
             }
@@ -1005,7 +1381,7 @@ public class Piece : MonoBehaviour
             {
                 if (p.m_color == ChessColor.Blanc && getname(p) == "Roi(Clone)")
                 {
-                    p.echec = false;
+                    /*p.echec = false;*/
                     p.done2 = false;
                 }
             }
@@ -1130,6 +1506,46 @@ public class Piece : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        foreach (Piece p in Game.pieces)
+        {
+            if (p != null)
+            {
+
+                if (getname(p) == "Roi(Clone)")
+                {
+                    foreach (Piece p0 in Game.pieces)
+                    {
+                        if (p != null && p0 != null)
+                        {
+                            if (p0 != p)
+                            {
+                                if (Case.find((p.transform.parent.position.z - 0.5f, p.transform.parent.position.x - 0.5f), p0.Possible_moves(p0.gameObject)))
+                                {
+                                    if (p0.m_color == ChessColor.Blanc)
+                                    {
+                                        if (!Isin(p0, bechequeur))
+                                        {
+                                            bechequeur.Add(p0);
+                                        }
+                                    }
+                                    else
+                                    {
+                                        if (!Isin(p0, wechequeur))
+                                        {
+                                            wechequeur.Add(p0);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+
+
+
         if (this.m_position != depart)
         {
             moved = true;

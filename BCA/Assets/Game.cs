@@ -16,6 +16,8 @@ public class Game : MonoBehaviour
     public GameObject Pion;
     Vector3 v3 = new Vector3();
     ChessColor c3 = new ChessColor();
+    public Piece roiblanc;
+    public Piece roinoir;
 
 
 
@@ -60,6 +62,14 @@ public class Game : MonoBehaviour
         p.color = color;
         p.setPosition(position);
         Game.pieces.Add(p);
+        if(Piece.getname(p)=="Roi(Clone)" && p.m_color == ChessColor.Blanc)
+        {
+            roiblanc = p;
+        }
+        else if (Piece.getname(p) == "Roi(Clone)" == Roi && p.m_color == ChessColor.Noir)
+        {
+            roinoir = p;
+        }
     }
 
     void createPiece(GameObject model, Vector3 pos, ChessColor color)
@@ -115,7 +125,6 @@ public class Game : MonoBehaviour
             {
                 if (p.m_color == ChessColor.Noir)
                 {
-                    p.echec = false;
                     p.done2 = false;
                 }
             }
@@ -125,7 +134,10 @@ public class Game : MonoBehaviour
             foreach (Piece p in Game.pieces)
             {
                 if (p.m_color == ChessColor.Blanc)
+                {
                     p.done2 = false;
+                }
+                    
             }
         }
     }
@@ -149,6 +161,10 @@ public class Game : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(this.pmb()==0 || this.pmn() == 0)
+        {
+            this.StopAllCoroutines();
+        }
 
         if (m_turn == ChessColor.Blanc)
         {
@@ -218,5 +234,41 @@ public class Game : MonoBehaviour
             }
             StartCoroutine(waiter());
         }
+
     }
+    public int pmb()
+    {
+        int n = 0;
+        foreach (Piece p in Game.pieces)
+        {
+            if (p != null)
+            {
+                if (p.m_color == ChessColor.Blanc)
+                {
+                    if (p.Possible_moves(p.gameObject).Count > 0)
+                    {
+                        n++;
+                    }
+                }
+            }
+            
+        }
+        return n;
+    }
+    public int pmn()
+    {
+        int n = 0;
+        foreach (Piece p in Game.pieces)
+        {
+            if (p.m_color == ChessColor.Noir)
+            {
+                if (p.Possible_moves(p.gameObject).Count > 0)
+                {
+                    n++;
+                }
+            }
+        }
+        return n;
+    }
+
 }
